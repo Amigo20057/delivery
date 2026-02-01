@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url = env("DATABASE_URL")
+}
+
+model Order {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId         String   @unique
+  items           Json
+  name            String?
+  phone           String?
+  comment         String?
+  telegramUserId  Int?
+  status          OrderStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
+}
