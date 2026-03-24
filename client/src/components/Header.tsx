@@ -1,13 +1,18 @@
 import { ShoppingBasket } from "lucide-react";
 import useBasket from "../hooks/useBasket";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const { totalFood, handleChangeOpenBasket } = useBasket();
+  const navigate = useNavigate();
 
   return (
     <header className="w-full bg-white fixed top-0 left-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="text-2xl font-bold text-orange-500 cursor-pointer">
+        <div
+          onClick={() => navigate("/")}
+          className="text-2xl font-bold text-orange-500 cursor-pointer"
+        >
           FoodExpress
         </div>
 

@@ -71,7 +71,7 @@ export default function Home() {
 
         <div className="flex gap-3">
           <input
-            placeholder="Введіть адресу..."
+            placeholder="Введіть назву..."
             className="px-4 py-3 rounded-lg w-80 text-white placeholder-white"
           />
           <button className="bg-black px-6 py-3 rounded-lg cursor-pointer">

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import MainLayout from "./layouts/MainLayout.tsx";
 import Home from "./pages/Home.tsx";
 import { BasketProvider } from "./context/BasketContext.tsx";
+import Order from "./pages/Order.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -11,6 +12,7 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/order" element={<Order />} />
         </Route>
       </Routes>
     </BasketProvider>

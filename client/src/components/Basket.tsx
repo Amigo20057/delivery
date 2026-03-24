@@ -1,9 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import useBasket from "../hooks/useBasket";
 import { X, Trash2, ShoppingBag } from "lucide-react";
 
 export default function Basket() {
-  const { food, isOpenBasket, handleChangeOpenBasket, removeFood } =
-    useBasket();
+  const {
+    food,
+    isOpenBasket,
+    handleChangeOpenBasket,
+    removeFood,
+    increaseFood,
+    decreaseFood,
+  } = useBasket();
+  const navigate = useNavigate();
+
+  const handleGoToCreateOrder = () => {
+    handleChangeOpenBasket();
+    navigate("/order");
+  };
 
   return (
     <>
@@ -23,7 +36,7 @@ export default function Basket() {
             <ShoppingBag size={20} className="text-orange-500" />
             <h2 className="text-xl font-semibold">Ваш кошик</h2>
             <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">
-              {food.length}
+              {food.reduce((sum, item) => sum + item.count, 0)}
             </span>
           </div>
 
@@ -60,6 +73,26 @@ export default function Basket() {
                 <p className="text-xs text-gray-300">{item.strArea}</p>
               </div>
 
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => decreaseFood(item.idMeal)}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200"
+                >
+                  -
+                </button>
+
+                <span className="min-w-[20px] text-center font-semibold">
+                  {item.count}
+                </span>
+
+                <button
+                  onClick={() => increaseFood(item.idMeal)}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-200"
+                >
+                  +
+                </button>
+              </div>
+
               <button
                 onClick={() => removeFood(item.idMeal)}
                 className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition"
@@ -71,7 +104,13 @@ export default function Basket() {
         </div>
 
         <div className="border-t px-6 py-5 bg-white">
-          <button className="w-full bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition text-white font-semibold py-3 rounded-xl shadow-lg">
+          <button
+            onClick={handleGoToCreateOrder}
+            disabled={food.length === 0}
+            className={`w-full bg-linear-to-r  text-white font-semibold py-3 rounded-xl shadow-lg
+            ${food.length === 0 ? "bg-gray-400 cursor-not-allowed" : "from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition"}
+            `}
+          >
             Замовити
           </button>
         </div>

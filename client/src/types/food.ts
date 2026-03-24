@@ -4,6 +4,7 @@ export interface IFood {
   strMeal: string;
   strCategory: string;
   strArea: string;
+  count: number;
 }
 export type FoodCategories =
   | "All"
