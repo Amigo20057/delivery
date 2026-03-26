@@ -23,6 +23,8 @@ export default function Home() {
     useState<FoodCategories | null>(null);
   const imageUrls = foods.map((f) => f.strMealThumb);
   const imagesLoaded = usePreloadImages(imageUrls);
+  const [search, setSearch] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const categories: {
     name: string;
@@ -46,6 +48,14 @@ export default function Home() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [search]);
+
   const handleCategoryClick = (category: FoodCategories) => {
     if (selectedCategory === category) {
       setSelectedCategory(null);
@@ -59,9 +69,17 @@ export default function Home() {
     setSelectedCategory(null);
   };
 
-  const filteredFoods = selectedCategory
-    ? foods.filter((f: IFood) => f.strCategory === selectedCategory)
-    : foods;
+  const filteredFoods = foods.filter((f: IFood) => {
+    const matchesCategory = selectedCategory
+      ? f.strCategory === selectedCategory
+      : true;
+
+    const matchesSearch = f.strMeal
+      .toLowerCase()
+      .includes(debouncedSearch.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div>
@@ -71,12 +89,11 @@ export default function Home() {
 
         <div className="flex gap-3">
           <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Введіть назву..."
-            className="px-4 py-3 rounded-lg w-80 text-white placeholder-white"
+            className="px-4 py-3 rounded-lg w-80 text-white placeholder-white  border-b"
           />
-          <button className="bg-black px-6 py-3 rounded-lg cursor-pointer">
-            Знайти
-          </button>
         </div>
       </section>
 

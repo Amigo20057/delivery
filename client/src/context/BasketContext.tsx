@@ -5,6 +5,7 @@ import {
   type PropsWithChildren,
 } from "react";
 import type { IFood } from "../types/food";
+import generatePrice from "../utils/generatePrice";
 
 type BasketContextType = {
   food: IFood[];
@@ -15,6 +16,7 @@ type BasketContextType = {
   handleChangeOpenBasket: () => void;
   increaseFood: (id: number) => void;
   decreaseFood: (id: number) => void;
+  totalPrice: number;
 };
 
 export const BasketContext = createContext<BasketContextType | null>(null);
@@ -24,6 +26,10 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isOpenBasket, setIsOpenBasket] = useState<boolean>(false);
 
   const totalFood = food.reduce((sum, item) => sum + item.count, 0);
+  const totalPrice = food.reduce(
+    (sum, item) => sum + item.price * item.count,
+    0,
+  );
 
   const addFood = (newFood: IFood) => {
     setFood((prev) => {
@@ -37,7 +43,14 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         );
       }
 
-      return [...prev, { ...newFood, count: 1 }];
+      return [
+        ...prev,
+        {
+          ...newFood,
+          count: 1,
+          price: generatePrice(newFood.idMeal.toString()),
+        },
+      ];
     });
   };
 
@@ -78,6 +91,7 @@ export const BasketProvider: FC<PropsWithChildren> = ({ children }) => {
         handleChangeOpenBasket,
         increaseFood,
         decreaseFood,
+        totalPrice,
       }}
     >
       {children}

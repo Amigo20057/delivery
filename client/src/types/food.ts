@@ -5,6 +5,7 @@ export interface IFood {
   strCategory: string;
   strArea: string;
   count: number;
+  price: number;
 }
 export type FoodCategories =
   | "All"

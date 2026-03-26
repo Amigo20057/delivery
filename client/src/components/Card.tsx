@@ -4,6 +4,7 @@ import useBasket from "../hooks/useBasket";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import LazyImage from "./LazyImage";
+import generatePrice from "../utils/generatePrice";
 
 interface IProps {
   food: IFood;
@@ -12,6 +13,7 @@ interface IProps {
 export default function Card({ food }: IProps) {
   const { addFood } = useBasket();
   const [animate, setAnimate] = useState(false);
+  const price = generatePrice(food.idMeal.toString());
 
   const handleAdd = () => {
     setAnimate(true);
@@ -50,6 +52,7 @@ export default function Card({ food }: IProps) {
           <h3 className="font-semibold text-lg">{food.strMeal}</h3>
           <p className="text-gray-500 text-sm">{food.strCategory}</p>
           <p className="text-gray-400 text-xs">{food.strArea}</p>
+          <p className="font-bold">{price} ₴</p>
         </div>
 
         <ShoppingCart className="cursor-pointer" onClick={handleAdd} />

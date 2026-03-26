@@ -71,6 +71,7 @@ export default function Basket() {
                 <p className="text-sm font-semibold">{item.strMeal}</p>
                 <p className="text-xs text-gray-400">{item.strCategory}</p>
                 <p className="text-xs text-gray-300">{item.strArea}</p>
+                <p>{item.price * item.count} ₴</p>
               </div>
 
               <div className="flex items-center gap-2">

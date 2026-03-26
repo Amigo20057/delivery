@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout.tsx";
 import Home from "./pages/Home.tsx";
 import { BasketProvider } from "./context/BasketContext.tsx";
 import Order from "./pages/Order.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")!).render(
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/order" element={<Order />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BasketProvider>
