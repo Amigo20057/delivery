@@ -1,11 +1,10 @@
 import { Update, Start, Ctx, Action } from 'nestjs-telegraf';
 import { OrderService } from 'src/order/order.service';
-import { Context, Telegraf } from 'telegraf';
+import { Context } from 'telegraf';
 import { BotService } from './bot.service';
 
 @Update()
 export class BotUpdate {
-  private readonly bot: Telegraf;
   constructor(
     private readonly orderService: OrderService,
     private readonly botService: BotService,

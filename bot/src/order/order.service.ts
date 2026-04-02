@@ -26,6 +26,7 @@ export class OrderService {
         name: dto.name,
         phone: dto.phone,
         comment: dto.comment,
+        address: dto.address,
       },
     });
 
@@ -41,8 +42,6 @@ export class OrderService {
     const order = await this.prisma.order.findUnique({
       where: { orderId },
     });
-
-    console.log(order);
 
     if (!order) {
       throw new Error('Order not found');

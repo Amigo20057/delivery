@@ -17,6 +17,7 @@ model Order {
   comment         String?
   telegramUserId  Int?
   status          OrderStatus @default(PENDING)
+  address         String
   createdAt       DateTime @default(now())
 }
 

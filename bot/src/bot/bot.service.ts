@@ -14,11 +14,25 @@ export class BotService {
       ? order.items
       : JSON.parse(typeof order.items === 'string' ? order.items : '[]');
 
+    let total = 0;
+
+    const itemsText = items
+      .map((i: any) => {
+        const itemTotal = i.price * i.count;
+        total += itemTotal;
+
+        return `• ${i.strMeal}  
+  ${i.count} × ${i.price} грн = ${itemTotal} грн`;
+      })
+      .join('\n\n');
+
     return (
-      `🆕 Новый заказ #${order.orderId}\n\n` +
-      items.map((i: any) => `• ${i.productId} × ${i.qty}`).join('\n') +
-      `\n\n👤 ${order.name ?? 'Без имени'}\n` +
+      `🆕 Нове замовлення #${order.orderId}\n\n` +
+      `🍽 Склад замовлення:\n${itemsText}\n\n` +
+      `💰 Разом: ${total} грн\n\n` +
+      `👤 ${order.name ?? 'Без імені'}\n` +
       `📞 ${order.phone ?? '—'}\n` +
+      `📍 ${order.address ?? '—'}\n` +
       `💬 ${order.comment ?? '—'}`
     );
   }
