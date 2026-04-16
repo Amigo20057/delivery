@@ -16,14 +16,14 @@ export class BotUpdate {
     const payload = ctx.message.text.split(' ')[1];
     if (!payload?.startsWith('order_')) return;
     if (!ctx.from?.id) {
-      return await ctx.reply('❌ Не удалось определить ваш Telegram ID');
+      return await ctx.reply('❌ Не вдалось визначити ваш Telegram ID');
     }
     await this.orderService.attachTelegramUser(
       payload.replace('order_', ''),
       ctx.from.id,
     );
     await ctx.reply(
-      `✅ Вы будете получать уведомления по заказу ${payload.replace('order_', '')}`,
+      `✅ Ви будете отримувати повідомлення по замовленню ${payload.replace('order_', '')}`,
     );
   }
 
@@ -36,11 +36,11 @@ export class BotUpdate {
     if (order.telegramUserId) {
       await this.botService.sendMessageToUser(
         order.telegramUserId,
-        `✅ Ваш заказ ${orderId} подтверждён`,
+        `✅ Ваше замовлення ${orderId} підтверджено`,
       );
     }
 
-    await ctx.editMessageText(`✅ Заказ ${orderId} подтверждён`);
+    await ctx.editMessageText(`✅ Замовлення ${orderId} підтверджено`);
   }
 
   @Action(/rejected:(.+)/)
@@ -55,12 +55,12 @@ export class BotUpdate {
       console.log('Sending message to user', order.telegramUserId);
       await this.botService.sendMessageToUser(
         order.telegramUserId,
-        `❌ Ваш заказ ${orderId} отклонён`,
+        `❌ Ваше замовлення ${orderId} відхилено`,
       );
     } else {
       console.log('No telegramUserId, cannot notify');
     }
 
-    await ctx.editMessageText(`❌ Заказ ${orderId} отклонён`);
+    await ctx.editMessageText(`❌ Замовлення ${orderId} відхилено`);
   }
 }
