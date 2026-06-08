@@ -5,7 +5,7 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class OrderService {
-  private readonly botName = 'delivery_bot_test_bot';
+  private readonly botName = 'fooodexpress_bot';
 
   constructor(
     @Inject('PRISMA') private readonly prisma: PrismaClient,
